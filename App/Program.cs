@@ -11,6 +11,8 @@ namespace App
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            Scripts.ConfigureEnvViaPowershell();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.ConfigureDatabase();
