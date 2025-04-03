@@ -1,3 +1,4 @@
+using Serilog;
 using App.Extensions;
 using App.Helpers;
 using Domain.Models;
@@ -12,6 +13,8 @@ namespace App
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.ConfigureDatabase();
+            builder.Services.ConfigureLogger(builder.Configuration);
 
             var app = builder.Build();
 
@@ -35,6 +38,8 @@ namespace App
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            app.ConfigureGlobalLogger();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -46,7 +51,7 @@ namespace App
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            
             app.Run();
         }
     }
