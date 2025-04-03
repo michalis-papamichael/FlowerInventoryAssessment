@@ -1,3 +1,7 @@
+using App.Extensions;
+using App.Helpers;
+using Domain.Models;
+using App.Seeders;
 namespace App
 {
     public class Program
@@ -10,6 +14,19 @@ namespace App
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+#if DEBUG
+            using (IServiceScope scope = app.Services.CreateScope())
+            {
+                FlowerInventoryAssessmentContext? context = scope.ServiceProvider.GetService<FlowerInventoryAssessmentContext>();
+                if (context == null)
+                {
+                    throw new Exception("Unable to get service context");
+                }
+                DataSeeder seeder = new DataSeeder(context);
+                seeder.Seed();
+            }
+#endif
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
