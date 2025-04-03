@@ -26,7 +26,7 @@ public partial class FlowerInventoryAssessmentContext : DbContext
         modelBuilder.Entity<Category>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Description).HasMaxLength(250);
+            entity.Property(e => e.Description).HasMaxLength(750);
             entity.Property(e => e.Name).HasMaxLength(150);
             entity.Property(e => e.Timestamp).HasPrecision(0);
         });
@@ -35,7 +35,7 @@ public partial class FlowerInventoryAssessmentContext : DbContext
         {
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.Description).HasMaxLength(250);
+            entity.Property(e => e.Description).HasMaxLength(750);
             entity.Property(e => e.Name).HasMaxLength(150);
             entity.Property(e => e.Price).HasColumnType("decimal(9, 2)");
             entity.Property(e => e.Timestamp).HasPrecision(0);

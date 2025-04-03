@@ -7,7 +7,7 @@ public partial class Flower
 {
     public int Id { get; set; }
 
-    public DateTime? Timestamp { get; set; }
+    public DateTime Timestamp { get; set; }
 
     public string Name { get; set; } = null!;
 
