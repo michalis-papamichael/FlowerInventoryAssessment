@@ -25,7 +25,9 @@ public partial class FlowerInventoryAssessmentContext : DbContext
     {
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(750);
             entity.Property(e => e.Name).HasMaxLength(150);
             entity.Property(e => e.Timestamp).HasPrecision(0);
