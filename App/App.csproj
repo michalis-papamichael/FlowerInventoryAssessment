@@ -16,11 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Scripts\" />
+    <ProjectReference Include="..\ServiceLayer\ServiceLayer.csproj" />
   </ItemGroup>
 
 </Project>
