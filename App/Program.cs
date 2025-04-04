@@ -13,6 +13,8 @@ namespace App
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.ConfigureDatabase();
+            builder.Services.ConfigureRepository();
+            builder.Services.ConfigureServiceLayer();
             builder.Services.ConfigureLogger(builder.Configuration);
 
             var app = builder.Build();

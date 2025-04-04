@@ -1,7 +1,9 @@
-﻿using Domain.Models;
+﻿using DataAccess.Repositories;
+using Domain.Models;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using ServiceLayer.Services;
 
 namespace App.Extensions
 {
@@ -11,6 +13,15 @@ namespace App.Extensions
         {
             string connection = Environment.GetEnvironmentVariable("FlowerInventoryAssessment:connection", EnvironmentVariableTarget.Machine);
             services.AddDbContext<FlowerInventoryAssessmentContext>(options => options.UseSqlServer(connection));
+        }
+        public static void ConfigureRepository(this IServiceCollection services)
+        {
+            services.AddTransient<Repository>();
+        }
+        public static void ConfigureServiceLayer(this IServiceCollection services)
+        {
+            services.AddTransient<FlowersServices>();
+            services.AddTransient<CategoriesServices>();
         }
         public static void ConfigureLogger(this IServiceCollection services, IConfiguration configuration)
         {
