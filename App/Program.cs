@@ -1,8 +1,5 @@
-using Serilog;
 using App.Extensions;
 using App.Helpers;
-using Domain.Models;
-using App.Seeders;
 namespace App
 {
     public class Program
@@ -21,16 +18,7 @@ namespace App
             var app = builder.Build();
 
 #if DEBUG
-            using (IServiceScope scope = app.Services.CreateScope())
-            {
-                FlowerInventoryAssessmentContext? context = scope.ServiceProvider.GetService<FlowerInventoryAssessmentContext>();
-                if (context == null)
-                {
-                    throw new Exception("Unable to get service context");
-                }
-                DataSeeder seeder = new DataSeeder(context);
-                seeder.Seed();
-            }
+            app.ConfigureSeeder();
 #endif
 
             // Configure the HTTP request pipeline.
@@ -40,7 +28,7 @@ namespace App
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.ConfigureGlobalLogger();
 
             app.UseHttpsRedirection();
@@ -53,7 +41,7 @@ namespace App
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-            
+
             app.Run();
         }
     }

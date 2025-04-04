@@ -1,4 +1,6 @@
-﻿using Serilog;
+﻿using App.Seeders;
+using Domain.Models;
+using Serilog;
 
 namespace App.Extensions
 {
@@ -21,6 +23,19 @@ namespace App.Extensions
                     Log.Error($"Exception on {context.Request.Method}: {context.Request.Path}", ex);
                 }
             });
+        }
+        public static void ConfigureSeeder(this WebApplication app)
+        {
+            using (IServiceScope scope = app.Services.CreateScope())
+            {
+                FlowerInventoryAssessmentContext? context = scope.ServiceProvider.GetService<FlowerInventoryAssessmentContext>();
+                if (context == null)
+                {
+                    throw new Exception("Unable to get service context");
+                }
+                DataSeeder seeder = new DataSeeder(context);
+                seeder.Seed();
+            }
         }
     }
 }
