@@ -20,7 +20,7 @@ namespace DataAccess.Repositories
         public FlowersRepository Flowers { get; private set; }
         public CategoriesRepository Categories { get; private set; }
         #region Base methods
-        public async Task SaveChanges()
+        public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
