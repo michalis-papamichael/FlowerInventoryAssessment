@@ -25,6 +25,10 @@ namespace DataAccess.Repositories.TableRepositories
             }
             return await _context.Flowers.FindAsync(id);
         }
+        public async Task<Flower?> GetFlowerByNameAndCategoryIdAsync(string name, int categoryId, string? include = null)
+        {
+            return await _context.Flowers.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower() && x.CategoryId == categoryId);
+        }
         public async Task<List<Flower>> GetFlowersWithPagingAsync(int skip, int take)
         {
             return await _context.Flowers.Skip(skip).Take(take).ToListAsync();
