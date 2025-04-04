@@ -33,6 +33,10 @@ namespace DataAccess.Repositories.TableRepositories
         {
             return await _context.Flowers.Skip(skip).Take(take).ToListAsync();
         }
+        public async Task CreateFlowerAsync(Flower flower)
+        {
+            await _context.Flowers.AddAsync(flower);
+        }
         public void UpdateFlower(Flower updatedFlwoer)
         {
             updatedFlwoer.LastUpdateTimestamp = DateTime.Now;
