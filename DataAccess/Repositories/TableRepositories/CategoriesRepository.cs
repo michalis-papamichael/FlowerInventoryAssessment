@@ -11,11 +11,11 @@ namespace DataAccess.Repositories.TableRepositories
             _context = context;
         }
 
-        public async Task<Category?> GetCategoryById(int id)
+        public async Task<Category?> GetCategoryByIdAsync(int id)
         {
             return await _context.Categories.FindAsync(id);
         }
-        public async Task<List<Category>> GetCategories()
+        public async Task<List<Category>> GetCategoriesAsync()
         {
             return await _context.Categories.ToListAsync();
         }

@@ -17,11 +17,11 @@ namespace DataAccess.Repositories.TableRepositories
         {
             _context = context;
         }
-        public async Task<Flower?> GetFlowerById(int id)
+        public async Task<Flower?> GetFlowerByIdAsync(int id)
         {
             return await _context.Flowers.FindAsync(id);
         }
-        public async Task<List<Flower>> GetFlowersWithPaging(int skip, int take)
+        public async Task<List<Flower>> GetFlowersWithPagingAsync(int skip, int take)
         {
             return await _context.Flowers.Skip(skip).Take(take).ToListAsync();
         }
@@ -30,9 +30,9 @@ namespace DataAccess.Repositories.TableRepositories
             updatedFlwoer.LastUpdateTimestamp = DateTime.Now;
             _context.Flowers.Update(updatedFlwoer);
         }
-        public async Task DeleteFlowerById(int id)
+        public async Task DeleteFlowerByIdAsync(int id)
         {
-            Flower flower = await GetFlowerById(id);
+            Flower? flower = await GetFlowerByIdAsync(id);
             if (flower != null)
             {
                 flower.IsActive = false;
