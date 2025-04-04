@@ -17,8 +17,12 @@ namespace DataAccess.Repositories.TableRepositories
         {
             _context = context;
         }
-        public async Task<Flower?> GetFlowerByIdAsync(int id)
+        public async Task<Flower?> GetFlowerByIdAsync(int id, string? include = null)
         {
+            if (!string.IsNullOrEmpty(include))
+            {
+                return await _context.Flowers.Include(include).FirstOrDefaultAsync(x => x.Id == id);
+            }
             return await _context.Flowers.FindAsync(id);
         }
         public async Task<List<Flower>> GetFlowersWithPagingAsync(int skip, int take)
