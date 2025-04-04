@@ -13,5 +13,7 @@ public partial class Category
 
     public string? Description { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual ICollection<Flower> Flowers { get; set; } = new List<Flower>();
 }

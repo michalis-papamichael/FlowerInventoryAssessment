@@ -17,5 +17,11 @@ public partial class Flower
 
     public int CategoryId { get; set; }
 
+    public bool IsActive { get; set; }
+
+    public DateTimeOffset? DeletionTimestamp { get; set; }
+
+    public DateTimeOffset? LastUpdateTimestamp { get; set; }
+
     public virtual Category Category { get; set; } = null!;
 }
