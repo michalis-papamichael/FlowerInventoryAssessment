@@ -20,3 +20,8 @@ body, html {
 .fw-semibold{
     font-weight: 500 !important;
 }
+
+/*used input error messages color-profile jquery validation*/
+.errror {
+    color: red
+}
