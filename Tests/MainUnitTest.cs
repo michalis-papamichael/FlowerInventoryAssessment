@@ -30,7 +30,7 @@ namespace Tests
                     var _context = scope.ServiceProvider.GetRequiredService<Repository>();
 
                     //Acts
-                    List<Flower> flower = await _context.Flowers.GetFlowersWithPagingAsync(0, 10);
+                    List<Flower> flower = await _context.Flowers.GetFlowersWithPagingAsync(0, 10, "Category");
                     int total = flower.Count();
 
                     //Assert
