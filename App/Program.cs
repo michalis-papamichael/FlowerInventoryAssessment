@@ -12,7 +12,7 @@ namespace App
             Scripts.ConfigureEnvViaPowershell(isTesting);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddMvc().AddRazorRuntimeCompilation();
             builder.Services.ConfigureDatabase();
             builder.Services.ConfigureRepository();
             builder.Services.ConfigureServiceLayer();
