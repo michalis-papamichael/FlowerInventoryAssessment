@@ -18,5 +18,6 @@ namespace ServiceLayer.ServiceResponder
         public bool Success { get; set; }
         public string? Message { get; set; } = null;
         public List<string> ErrorMessages { get; set; }
+        public Exception? Exception { get; set; }
     }
 }
