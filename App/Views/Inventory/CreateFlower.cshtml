@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<ServiceLayer.ServiceDtos.Categories.SCategoryDto>
+@{
     ViewData["Title"] = "Create";
 }
 @section Styles {
@@ -34,7 +35,10 @@
                         <label for="category">Category</label>
                         <select id="category" name="category" class="form-control">
                             <option selected value="">Choose Category</option>
-                            <option>...</option>
+                            @foreach (var c in Model)
+                            {
+                                <option value="@c.Id">@c.Name</option>                                
+                            } 
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Create</button>
