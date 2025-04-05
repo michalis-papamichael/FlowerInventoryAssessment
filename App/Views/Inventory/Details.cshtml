@@ -1,14 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Details";
 }
-@section Styles{
+@section Styles {
     <!-- Custom styles for this page -->
     <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 }
-<div class="row">
+<div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Flower Details</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-@section Scripts{
+@section Scripts {
     <!-- Page level plugins -->
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -26,7 +26,39 @@
 
     <script>
         $(document).ready(function(){
-            $("#dt-flowers")
+            var dt=$("#dt-flowers").DataTable({
+                pageLength: 5,
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                ajax: {
+                    "url": "@Url.Action("GetFlowers", "Inventory")",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                language: {
+                    "searchPlaceholder": "Flower, Category or Price",
+                },
+                columns:[
+                    {title:"Flower",data:"name"},
+                    {title:"Category",data:"categoryName"},
+                    {title:"Price",data:"price"},
+                    {
+                        title: "Actions",
+                        searchable: false,
+                        orderable: false,
+                        className: "text-center",
+                        render: function (data, type, full, row, meta) {
+                            return `<div class="d-flex justify-content-center row">
+                                        <div class="col-lg-6 col-md-12 px-1"><button type="button" class="btn btn-sm btn-block btn-outline-primary mb-1"><span class="fal fa-user-chart mr-1"></span>Edit</button></div>
+                                        <div class="col-lg-6 col-md-12 px-1"><button type="button" class="btn btn-sm btn-block btn-outline-warning mb-1"><span class="fal fa-user-chart mr-1"></span>Delete</button></div>
+                                    </div >`;
+
+                        }
+                    },
+                ]
+            });
+
         })
     </script>
 }
