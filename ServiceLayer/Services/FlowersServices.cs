@@ -115,11 +115,13 @@ namespace ServiceLayer.Services
             }
             return response;
         }
-        public async Task<ServiceResponse<List<SFlowerDto>>> GetFlowersWithPaging(int skip, int take)
+        public async Task<ServiceResponse<SFlowersPagingDto>> GetFlowersWithPaging(int skip, int take)
         {
-            ServiceResponse<List<SFlowerDto>> response = new();
+            ServiceResponse<SFlowersPagingDto> response = new();
             try
             {
+                SFlowersPagingDto flowersPaging = new();
+
                 List<SFlowerDto> flowers = (await _context.Flowers.GetFlowersWithPagingAsync(skip, take, include: "Category"))
                     .Select(x => new SFlowerDto()
                     {
@@ -131,7 +133,10 @@ namespace ServiceLayer.Services
                         CategoryName = x.Category.Name,
                     }).ToList();
 
-                response.Data = flowers;
+                flowersPaging.Flowers = flowers;
+                flowersPaging.TotalFlowers = await _context.Flowers.CountFlowers();
+
+                response.Data = flowersPaging;
                 response.Success = true;
                 response.Message = "Ok";
             }
