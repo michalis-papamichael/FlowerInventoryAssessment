@@ -18,8 +18,8 @@
                         <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group">
-                        <label for="flowerDesc">Flower description</label>
-                        <textarea class="form-control" id="flowerDesc" name="flowerDesc" style="resize:none; min-height:100px;"></textarea>
+                        <label for="description">Flower description</label>
+                        <textarea class="form-control" id="description" name="description" style="resize:none; min-height:100px;"></textarea>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -27,13 +27,13 @@
                             <input type="text" class="form-control" id="price" name="price">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inventory">Inventory</label>
-                            <input type="text" class="form-control" id="inventory">
+                            <label for="totalInventory">In Inventory</label>
+                            <input type="text" class="form-control" id="totalInventory" name="totalInventory">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="category">Category</label>
-                        <select id="category" name="category" class="form-control">
+                        <label for="categoryId">Category</label>
+                        <select id="categoryId" name="categoryId" class="form-control">
                             <option selected value="">Choose Category</option>
                             @foreach (var c in Model)
                             {
@@ -59,7 +59,7 @@
                         minlength:3,
                         maxlength: 150
                     },
-                    flowerDesc: {
+                    description: {
                         required: false,
                         maxlength: 750
                     },
@@ -68,12 +68,12 @@
                         number: true,
                         min:0,
                     },
-                    inventory: {
+                    totalInventory: {
                         required: true,
                         digits: true,
                         min:0,
                     },
-                    category:{
+                    categoryId:{
                         required:true,
                     }
                     },
