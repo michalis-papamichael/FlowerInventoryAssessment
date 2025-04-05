@@ -29,7 +29,6 @@ namespace ServiceLayer.Services
                     {
                         Id = x.Id,
                         Name = x.Name,
-                        Description = x.Description
                     })
                     .ToList();
 
