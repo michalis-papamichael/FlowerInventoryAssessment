@@ -8,7 +8,8 @@ namespace App
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            Scripts.ConfigureEnvViaPowershell();
+            bool isTesting = builder.Configuration.GetValue<bool>("IsTesting");            
+            Scripts.ConfigureEnvViaPowershell(isTesting);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

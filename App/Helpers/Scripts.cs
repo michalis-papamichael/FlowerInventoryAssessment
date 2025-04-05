@@ -4,9 +4,13 @@ namespace App.Helpers
 {
     public static class Scripts
     {
-        public static void ConfigureEnvViaPowershell()
+        public static void ConfigureEnvViaPowershell(bool isTesting)
         {
             string? projectDir = Environment.CurrentDirectory;
+            if (isTesting)
+            {
+                projectDir = Directory.GetParent(projectDir)?.Parent?.Parent?.Parent?.FullName + "\\App";
+            }
 
             var ps1File = @$"{projectDir}\Scripts\env.ps1";
             if (!File.Exists(ps1File))
