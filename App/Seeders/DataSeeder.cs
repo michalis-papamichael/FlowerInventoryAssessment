@@ -52,6 +52,7 @@ namespace App.Seeders
                         CategoryId=1,
                         Timestamp=DateTime.Now,
                         Price=2.5m,
+                        TotalInventory = 5
                     },
                     new Flower()
                     {
@@ -60,6 +61,7 @@ namespace App.Seeders
                         CategoryId = 1,
                         Timestamp = DateTime.Now,
                         Price = 2.8m,
+                        TotalInventory = 5
                     },
                     new Flower()
                     {
@@ -68,6 +70,7 @@ namespace App.Seeders
                         CategoryId = 1,
                         Timestamp = DateTime.Now,
                         Price = 3.00m,
+                        TotalInventory = 5
                     },
                     new Flower()
                     {
@@ -76,6 +79,7 @@ namespace App.Seeders
                         CategoryId = 2,
                         Timestamp = DateTime.Now,
                         Price = 3.10m,
+                        TotalInventory = 5
                     },
                     new Flower()
                     {
@@ -84,6 +88,7 @@ namespace App.Seeders
                         CategoryId = 2,
                         Timestamp = DateTime.Now,
                         Price = 2.95m,
+                        TotalInventory = 5
                     },
                     new Flower()
                     {
@@ -92,6 +97,7 @@ namespace App.Seeders
                         CategoryId = 3,
                         Timestamp = DateTime.Now,
                         Price = 4.20m,
+                        TotalInventory = 5
                     }
                 };
                 _context.Flowers.AddRange(flowers);

@@ -33,6 +33,7 @@ namespace ServiceLayer.Services
                         Price = flower.Price,
                         Description = flower.Description,
                         CategoryId = flower.CategoryId,
+                        TotalInventory = flower.TotalInventory,
                         CategoryName = flower.Category.Name,
                     };
                     response.Success = true;
@@ -73,6 +74,7 @@ namespace ServiceLayer.Services
                             CategoryId = dto.CategoryId,
                             Description = dto.Description,
                             Price = dto.Price,
+                            TotalInventory = dto.TotalInventory,
                             IsActive = true,
                         };
                         await _context.Flowers.CreateFlowerAsync(newFlower);
@@ -130,6 +132,7 @@ namespace ServiceLayer.Services
                         Price = x.Price,
                         Description = x.Description,
                         CategoryId = x.CategoryId,
+                        TotalInventory = x.TotalInventory,
                         CategoryName = x.Category.Name,
                     }).ToList();
 

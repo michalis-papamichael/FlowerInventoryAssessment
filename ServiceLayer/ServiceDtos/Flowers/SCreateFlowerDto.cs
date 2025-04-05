@@ -18,6 +18,7 @@ namespace ServiceLayer.ServiceDtos.Flowers
         public string? Description { get; set; }
         [Precision(9, 2)]
         public decimal Price { get; set; }
+        public int TotalInventory { get; set; }
         public int CategoryId { get; set; }
     }
 }
