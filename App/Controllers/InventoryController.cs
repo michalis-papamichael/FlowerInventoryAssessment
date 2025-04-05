@@ -17,7 +17,9 @@ namespace App.Controllers
         }
         public IActionResult Details()
         {
+            // used to change layout from the Home controller to InventoryLayout see _ViewStart
             ViewData["Layout"] = "_InventoryLayout";
+            ViewData["HeadingContent"] = "Here you can create new flowers, edit or delete existing ones.";
             return View();
         }
         // used for datatable calls
