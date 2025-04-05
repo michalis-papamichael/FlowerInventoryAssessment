@@ -16,7 +16,7 @@ namespace ServiceLayer.ServiceResponder
         }
         public T? Data { get; set; }
         public bool Success { get; set; }
-        public string? Message { get; set; } = null;
+        public string Message { get; set; }
         public List<string> ErrorMessages { get; set; }
         public Exception? Exception { get; set; }
     }
