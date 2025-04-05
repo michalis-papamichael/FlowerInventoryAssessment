@@ -3,6 +3,7 @@ using DataAccess.Repositories;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceLayer.Services;
 
 namespace Tests
 {
@@ -35,6 +36,29 @@ namespace Tests
 
                     //Assert
                     Assert.NotEqual(0, total);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        [Fact]
+        public async Task GetFlowerBy_NonExistant_Id()
+        {
+            try
+            {
+                //Arrange
+                var serviceProvider = _factory.Services.GetRequiredService<IServiceProvider>();
+                using (var scope = serviceProvider.CreateScope())
+                {
+                    var _context = scope.ServiceProvider.GetRequiredService<FlowersServices>();
+
+                    //Acts
+                    var response = await _context.GetFlowerByIdAsync(-1);
+
+                    //Assert
+                    Assert.Null(response.Data);
+                    Assert.NotEmpty(response.ErrorMessages);
                 }
             }
             catch (Exception ex)
