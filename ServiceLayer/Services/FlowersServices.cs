@@ -60,7 +60,7 @@ namespace ServiceLayer.Services
             ServiceResponse<SFlowerDto> response = new();
             try
             {
-                Flower? flower = await _context.Flowers.GetFlowerByNameAndCategoryIdAsync(dto.Name, dto.CategoryId);
+                Flower? flower = await _context.Flowers.GetFlowerByNameAndCategoryIdAsync(dto.Name, dto.CategoryId, "Category");
                 if (flower == null)
                 {
                     Category? category = await _context.Categories.GetCategoryByIdAsync(dto.CategoryId);
