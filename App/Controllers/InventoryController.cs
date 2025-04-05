@@ -82,5 +82,17 @@ namespace App.Controllers
             };
             return Ok(errorjson);
         }
+        public async Task<IActionResult> CreateFlower()
+        {
+            ViewData["Layout"] = "_InventoryLayout";            
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateFlower(object model)
+        {
+            ViewData["Layout"] = "_InventoryLayout";
+            return View();
+        }
     }
 }
