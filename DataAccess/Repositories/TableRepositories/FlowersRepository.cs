@@ -37,6 +37,10 @@ namespace DataAccess.Repositories.TableRepositories
             }
             return await _context.Flowers.Skip(skip).Take(take).ToListAsync();
         }
+        public async Task<int> CountFlowers()
+        {
+            return await _context.Flowers.CountAsync();
+        }
         public async Task CreateFlowerAsync(Flower flower)
         {
             await _context.Flowers.AddAsync(flower);
