@@ -37,10 +37,8 @@ namespace DataAccess.Repositories.TableRepositories
             }
             return _context.Flowers.Where(wherePred).Skip(skip).Take(take).ToList();
         }
-        public async Task<int> CountFlowers()
         public int CountFlowers(Func<Flower,bool> wherePred)
         {
-            return await _context.Flowers.CountAsync();
             return _context.Flowers.Where(wherePred).Count();
         }
         public async Task CreateFlowerAsync(Flower flower)
