@@ -21,6 +21,7 @@ namespace App.Seeders
                         Name = "Annuals",
                         Description = "Annual plants complete their life cycle lifecycle within a single year—from germination, flowering, and seed production, to eventual death. They’re perfect for those who want to see quick results and incorporate varied colors and textures into their gardens every year. Some gardens can benefit from two successions of annuals in the same season, maximizing blooming.",
                         Timestamp = DateTime.Now,
+                        IsActive = true,
                     },
                     new Category()
                     {
@@ -28,6 +29,7 @@ namespace App.Seeders
                         Name = "Bulbs",
                         Description = "Bulbous plants, including tubers and corms, form a unique category. They store energy in an underground bulb and flower every year. Spring-flowering bulbs are planted in the autumn and need a cold spell to bloom, whereas autumn-flowering bulbs are planted in the spring. They are essential for continuous flowering from early spring to late autumn.",
                         Timestamp = DateTime.Now,
+                        IsActive = true,
                     },
                     new Category()
                     {
@@ -35,6 +37,7 @@ namespace App.Seeders
                         Name = "Perennials",
                         Description = "Perennials come back every year, surviving winters and resuming growth in spring. Their ability to bloom for several years makes them an economical, long-lasting choice for any garden. They require less replacement and offer permanent structure to the landscape.",
                         Timestamp = DateTime.Now,
+                        IsActive = true,
                     }
                 };
                 _context.Categories.AddRange(categories);
