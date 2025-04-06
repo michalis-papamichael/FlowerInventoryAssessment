@@ -55,7 +55,8 @@ namespace DataAccess.Repositories.TableRepositories
             {
                 query = query.Where(x => x.Name.Contains(search, StringComparison.CurrentCultureIgnoreCase)
                                 || x.Category.Name.Contains(search, StringComparison.CurrentCultureIgnoreCase)
-                                || x.Price.ToString().Contains(search, StringComparison.CurrentCultureIgnoreCase))
+                                || x.Price.ToString().Contains(search, StringComparison.CurrentCultureIgnoreCase)
+                                || x.TotalInventory.ToString().Contains(search, StringComparison.CurrentCultureIgnoreCase))
                     .ToList();
 
             }
