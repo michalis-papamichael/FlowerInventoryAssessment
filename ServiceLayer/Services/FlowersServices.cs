@@ -45,7 +45,7 @@ namespace ServiceLayer.Services
                 {
                     response.Data = null;
                     response.Success = false;
-                    response.Message = "DoesNotExist";
+                    response.Message = "Does Not Exist";
                     response.ErrorMessages.Add("Flower does not exists");
                 }
             }
@@ -107,7 +107,7 @@ namespace ServiceLayer.Services
                     {
                         response.Data = null;
                         response.Success = false;
-                        response.Message = "DoesNotExist";
+                        response.Message = "Does Not Exist";
                         response.ErrorMessages.Add("Category does not exist");
                     }
                 }
@@ -115,7 +115,7 @@ namespace ServiceLayer.Services
                 {
                     response.Data = null;
                     response.Success = false;
-                    response.Message = "AlreadyExist";
+                    response.Message = "Already Exist";
                     response.ErrorMessages.Add("Flower already exist");
                 }
             }
@@ -213,7 +213,7 @@ namespace ServiceLayer.Services
                 {
                     response.Data = null;
                     response.Success = false;
-                    response.Message = "DoesNotExist";
+                    response.Message = "Does Not Exist";
                     response.ErrorMessages.Add("Flower does not exists");
                 }
             }
@@ -258,7 +258,7 @@ namespace ServiceLayer.Services
                 {
                     response.Data = null;
                     response.Success = false;
-                    response.Message = "DoesNotExist";
+                    response.Message = "Does Not Exist";
                     response.ErrorMessages.Add("Flower does not exists");
                 }
             }
