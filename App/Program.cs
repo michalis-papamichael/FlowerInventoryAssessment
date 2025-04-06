@@ -12,12 +12,12 @@ namespace App
             Scripts.ConfigureEnvViaPowershell(isTesting);
 
             // Add services to the container.
+            builder.Services.ConfigureAutoMapper();
             builder.Services.AddMvc().AddRazorRuntimeCompilation();
             builder.Services.ConfigureDatabase();
             builder.Services.ConfigureRepository();
             builder.Services.ConfigureServiceLayer();
             builder.Services.ConfigureLogger(builder.Configuration);
-
             var app = builder.Build();
 
 #if DEBUG

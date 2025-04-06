@@ -1,6 +1,5 @@
 ﻿using DataAccess.Repositories;
 using Domain.Models;
-using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using ServiceLayer.Services;
@@ -22,6 +21,10 @@ namespace App.Extensions
         {
             services.AddTransient<FlowersServices>();
             services.AddTransient<CategoriesServices>();
+        }
+        public static void ConfigureAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Program));
         }
         public static void ConfigureLogger(this IServiceCollection services, IConfiguration configuration)
         {
