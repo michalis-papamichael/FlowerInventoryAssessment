@@ -1,0 +1,96 @@
+﻿@model App.Dtos.Flowers.EditFlowerDto
+@{
+    ViewData["Title"] = "Edit";
+}
+@section Styles {
+
+}
+<div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-evenly align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Flower Information</h6>
+        </div>
+        <div class="card-body">
+            <div class="col-md-6">
+                @await Html.PartialAsync("_MessageBanner", model: Model.Messages)
+                <form id="editFlowerForm" asp-antiforgery="true" asp-controller="Inventory" asp-action="EditFlower">
+                    <input type="hidden" class="form-control" id="id" name="id" asp-for="@Model.Id">
+                    <div class="form-group">
+                        <label for="name">Flower name</label>
+                        <input type="text" class="form-control" id="name" name="name" asp-for="@Model.Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Flower description</label>
+                        <textarea class="form-control" id="description" name="description" asp-for="@Model.Description" style="resize:none; min-height:100px;"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" id="price" name="price" asp-for="@Model.Price">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="totalInventory">In Inventory</label>
+                            <input type="text" class="form-control" id="totalInventory" name="totalInventory" asp-for="@Model.TotalInventory">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryId">Category</label>
+                        <select id="categoryId" name="categoryId" class="form-control">
+                            @foreach (var c in Model.Categories)
+                            {
+                                if(Model.CategoryId==c.Id)
+                                {
+                                    <option selected value="@c.Id">@c.Name</option>
+                                }
+                                else
+                                {
+                                    <option selected value="@c.Id">@c.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"
+            integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function(){
+            $("#createFlowerForm").validate({
+                rules: {
+                    id:{
+                        required:true,
+                    },
+                    name: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 150
+                    },
+                    description: {
+                        required: false,
+                        maxlength: 750
+                    },
+                    price: {
+                        required: true,
+                        number: true,
+                        min:0,
+                    },
+                    totalInventory: {
+                        required: true,
+                        digits: true,
+                        min:0,
+                    },
+                    categoryId:{
+                        required:true,
+                    }
+                    },
+                errorClass: "errror",
+                errorElement: "span",
+            });
+        });
+    </script>
+}
