@@ -9,6 +9,7 @@
         public int TotalInventory { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public string? ImageUri { get; set; }
         public bool IsActive { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,5 +21,6 @@ namespace ServiceLayer.ServiceDtos.Flowers
         public decimal Price { get; set; }
         public int TotalInventory { get; set; }
         public int CategoryId { get; set; }
+        public IFormFile? ImageFormFile { get; set; }
     }
 }

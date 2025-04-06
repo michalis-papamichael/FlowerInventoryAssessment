@@ -24,6 +24,8 @@ namespace App.Dtos.Flowers
         public int TotalInventory { get; set; }
         public int CategoryId { get; set; }
 
+        public IFormFile? ImageFormFile { get; set; }
+
         // Categories for the select
         public List<CategoryDto> Categories { get; set; }
         // Used to show message to user according to outcome

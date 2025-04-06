@@ -24,7 +24,8 @@ namespace App.Dtos.Flowers
         public decimal Price { get; set; }
         public int TotalInventory { get; set; }
         public int CategoryId { get; set; }
-
+        public string? ImageUri { get; set; }
+        public IFormFile? ImageFormFile { get; set; }
         // Categories for the select
         public List<CategoryDto> Categories { get; set; }
         // Used to show message to user according to outcome
