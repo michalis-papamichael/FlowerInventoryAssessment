@@ -6,6 +6,13 @@ namespace App.Helpers
     {
         public static void ConfigureEnvViaPowershell(bool isTesting)
         {
+            string? mainDbConnection = Environment.GetEnvironmentVariable("FlowerInventoryAssessment:connection", EnvironmentVariableTarget.Machine);
+            string? logsDbConnection = Environment.GetEnvironmentVariable("FlowerInventoryAssessmentLogs:connection", EnvironmentVariableTarget.Machine);
+            if (!string.IsNullOrEmpty(mainDbConnection) && !string.IsNullOrEmpty(logsDbConnection))
+            {
+                // both env vars exist; no need for ps script
+                return;
+            }
             string? projectDir = Environment.CurrentDirectory;
             if (isTesting)
             {
