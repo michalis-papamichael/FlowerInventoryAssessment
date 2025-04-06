@@ -13,7 +13,7 @@
         <div class="card-body">
             <div class="col-md-6">
                 @await Html.PartialAsync("_MessageBanner", model: Model.Messages)
-                <form id="editFlowerForm" asp-antiforgery="true" asp-controller="Inventory" asp-action="EditFlower">
+                <form id="editFlowerForm" asp-antiforgery="true" asp-controller="Inventory" asp-action="EditFlower" enctype="multipart/form-data">
                     <input type="hidden" class="form-control" id="id" name="id" asp-for="@Model.Id">
                     <div class="form-group">
                         <label for="name">Flower name</label>
@@ -49,7 +49,16 @@
                             }
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+
+                    <div class="form-group col-md-6">
+                        <img src="@App.Statics.AppPaths.STATIC_FILES/@Model.ImageUri">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Flower Image:
+                            <input name="imageFormFile" type="file">
+                        </label>
+                    </div>
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </form>
             </div>
