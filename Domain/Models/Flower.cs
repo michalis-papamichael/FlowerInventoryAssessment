@@ -19,6 +19,8 @@ public partial class Flower
 
     public int CategoryId { get; set; }
 
+    public string? ImageUri { get; set; }
+
     public bool IsActive { get; set; }
 
     public DateTimeOffset? DeletionTimestamp { get; set; }
