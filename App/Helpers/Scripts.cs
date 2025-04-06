@@ -15,12 +15,13 @@ namespace App.Helpers
             string? logsDbConnection = Environment.GetEnvironmentVariable("FlowerInventoryAssessmentLogs:connection", EnvironmentVariableTarget.Machine);
             if (!string.IsNullOrEmpty(mainDbConnection) && !string.IsNullOrEmpty(logsDbConnection))
             {
-                // both env vars exist; no need for ps script
+                // both env vars exist; no need for script to run
                 return;
             }
             string? projectDir = Environment.CurrentDirectory;
             if (isTesting)
             {
+                // different path if is running from testing environment
                 projectDir = Directory.GetParent(projectDir)?.Parent?.Parent?.Parent?.FullName + "\\App";
             }
 
@@ -28,6 +29,7 @@ namespace App.Helpers
             if (!File.Exists(ps1File))
             {
                 string workingDirectory = Environment.CurrentDirectory;
+                // for binary file
                 projectDir = Directory.GetParent(workingDirectory)?.Parent?.Parent?.FullName;
                 ps1File = @$"{projectDir}\Scripts\env.ps1";
                 if (!File.Exists(ps1File))
