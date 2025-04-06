@@ -18,6 +18,11 @@ namespace ServiceLayer.Services
         {
             _context = context;
         }
+        /// <summary>
+        /// Gets te flowers by id if exists
+        /// </summary>
+        /// <param name="id">Flower Id</param>
+        /// <returns></returns>
         public async Task<ServiceResponse<SFlowerDto>> GetFlowerByIdAsync(int id)
         {
             ServiceResponse<SFlowerDto> response = new();
@@ -57,6 +62,11 @@ namespace ServiceLayer.Services
             }
             return response;
         }
+        /// <summary>
+        /// Create the flower by passing the flower dto, searches if flower exists with the same name & category if not performs the operation
+        /// </summary>
+        /// <param name="dto">Create Flower dto object</param>
+        /// <returns></returns>
         public async Task<ServiceResponse<SFlowerDto>> CreateFlower(SCreateFlowerDto dto)
         {
             ServiceResponse<SFlowerDto> response = new();
@@ -120,6 +130,12 @@ namespace ServiceLayer.Services
             }
             return response;
         }
+        /// <summary>
+        /// Get flowers' page by skipping <c>skip</c> amount and taking <c>take</c> amount.
+        /// </summary>
+        /// <param name="skip">Amount of data to skip</param>
+        /// <param name="take">Amount of data to take</param>
+        /// <returns></returns>
         public async Task<ServiceResponse<SFlowersPagingDto>> GetFlowersWithPaging(int skip, int take)
         {
             ServiceResponse<SFlowersPagingDto> response = new();
@@ -210,7 +226,7 @@ namespace ServiceLayer.Services
         /// <summary>
         /// Delete flower by searching by id & if exists, deletes it (softly).
         /// </summary>
-        /// <param name="id">Flower id</param>
+        /// <param name="id">Flower Id</param>
         /// <returns></returns>
         public async Task<ServiceResponse<SFlowerDto>> DeleteFlowerById(int id)
         {
