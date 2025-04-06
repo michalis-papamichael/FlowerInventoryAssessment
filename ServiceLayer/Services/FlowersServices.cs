@@ -148,6 +148,38 @@ namespace ServiceLayer.Services
                 response.Data = null;
                 response.Success = false;
                 response.Message = "GetFlowersWithPaging";
+        public async Task<ServiceResponse<SEditFlowerDto>> EditFlower(SEditFlowerDto dto)
+        {
+            ServiceResponse<SEditFlowerDto> response = new();
+            try
+            {
+                Flower? flower = await _context.Flowers.GetFlowerByIdAsync(dto.Id, "Category");
+                if (flower != null)
+                {
+                    flower.Name = dto.Name;
+                    flower.Description = dto.Description;
+                    flower.Price = dto.Price;
+                    flower.TotalInventory = dto.TotalInventory;
+                    flower.CategoryId = dto.CategoryId;
+                    _context.Flowers.UpdateFlower(flower);
+                    await _context.SaveChangesAsync();
+
+                    response.Success = true;
+                    response.Message = "Editted";
+                }
+                else
+                {
+                    response.Data = null;
+                    response.Success = false;
+                    response.Message = "DoesNotExist";
+                    response.ErrorMessages.Add("Flower does not exists");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.Success = false;
+                response.Message = nameof(EditFlower);
                 response.Exception = ex;
             }
             return response;
