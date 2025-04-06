@@ -100,8 +100,18 @@ namespace App.Controllers
         }
         public async Task<IActionResult> CreateFlower()
         {
-            ViewData["Layout"] = "_InventoryLayout";            
-            return View();
+            ViewData["Layout"] = "_InventoryLayout";
+            ServiceResponse<List<SCategoryDto>> response = await _categoriesServices.GetCategories();
+            if (response.Success && response.Data != null)
+            {
+                List<CategoryDto> categories = _mapper.Map<List<CategoryDto>>(response.Data);
+                CreateFlowerDto dto = new CreateFlowerDto();
+                dto.Categories = categories;
+                return View(dto);
+            }
+            Log.Warning(response.Message, response.Exception);
+            //todo handle badrequest globally
+            return BadRequest();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
