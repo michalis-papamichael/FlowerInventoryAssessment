@@ -3,6 +3,7 @@ using App.Dtos.Flowers;
 using App.Helpers;
 using App.Models;
 using AutoMapper;
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using ServiceLayer.ServiceDtos.Categories;
@@ -144,13 +145,13 @@ namespace App.Controllers
                         Status = Enums.MessageStatus.Success,
                     });
                     dto.Categories = model.Categories;
-                    if (dto.Categories.Count>0)
+                    if (dto.Categories.Count > 0)
                     {
                         return View(dto);
                     }
                     return RedirectToAction("Details");
                 }
-                if (model.Categories.Count>0)
+                if (model.Categories.Count > 0)
                 {
                     model.Messages.Add(new ViewMessage()
                     {
@@ -240,6 +241,17 @@ namespace App.Controllers
             {
                 Log.Error($"{nameof(EditFlower)} operation", ex);
             }
+            return BadRequest();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteFlower(int id)
+        {
+            ServiceResponse<SFlowerDto> response = await _flowersServices.DeleteFlowerById(id);
+            if (response.Success && response.Data != null)
+            {
+                return Ok();
+            }
+            Log.Warning(response.Message, response.Exception);
             return BadRequest();
         }
     }

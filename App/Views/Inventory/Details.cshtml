@@ -18,12 +18,36 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="deleteFlowerModal" tabindex="-1" aria-labelledby="deleteFlowerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteFlowerModalLabel">Delete <span class="flowerName"></span> Flower?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="deleteForm" asp-antiforgery="true">
+                    <input type="hidden" id="flowerId" name="id">
+                    <p>Are you sure you want to delete the flower <span class="flowerName"></span></p>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" form="deleteForm" class="btn btn-warning">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     <!-- Page level plugins -->
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <!-- Page level custom scripts -->
-    <script src="~/js/demo/datatables-demo.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"
+            integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         $(document).ready(function(){
@@ -61,6 +85,45 @@
                 ]
             });
 
+            $("#deleteForm").validate({
+                rules: {
+                    id:{
+                        required:true,
+                    },
+                },
+                errorClass: "errror",
+                errorElement: "span",
+                submitHandler: function(form) {
+                    debugger;
+                    const id=$("#flowerId").val();
+                    $.ajax({
+                        type: "post",
+                        url: "@Url.Action("DeleteFlower", "Inventory")",
+                        data: { "id": id},
+                        datatype: 'json',
+                        success: function (result) {
+                            dt.ajax.url("@Url.Action("GetFlowers", "Inventory")").load();
+                            $("#deleteFlowerModal").modal("hide");
+                            Toast.fire({
+                                icon: "success",
+                                title: "Successfully deleted flower"
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            $("#deleteFlowerModal").modal("hide");
+                            Toast.fire({
+                                icon: "warning",
+                                title: "Failed to delete flower"
+                            });
+                        }
+                    });
+                }
+            })
         })
+        function showDeleteModal(name,id){
+            $(".flowerName").text(name);
+            $("#flowerId").val(id);
+            $("#deleteFlowerModal").modal("show");
+        }
     </script>
 }
