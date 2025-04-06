@@ -156,6 +156,11 @@ namespace ServiceLayer.Services
             }
             return response;
         }
+        /// <summary>
+        /// Edit the flower by passing the flower dto with updated data, searches with id and if exists performs the edit operation.
+        /// </summary>
+        /// <param name="dto">Edit Flower dto object</param>
+        /// <returns></returns>
         public async Task<ServiceResponse<SFlowerDto>> EditFlower(SEditFlowerDto dto)
         {
             ServiceResponse<SFlowerDto> response = new();
@@ -202,6 +207,11 @@ namespace ServiceLayer.Services
             }
             return response;
         }
+        /// <summary>
+        /// Delete flower by searching by id & if exists, deletes it (softly).
+        /// </summary>
+        /// <param name="id">Flower id</param>
+        /// <returns></returns>
         public async Task<ServiceResponse<SFlowerDto>> DeleteFlowerById(int id)
         {
             ServiceResponse<SFlowerDto> response = new();
