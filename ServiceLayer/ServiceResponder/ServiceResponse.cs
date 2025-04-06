@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ServiceResponder
 {
+    /// <summary>
+    /// Main class that is used for every services methods' return type
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ServiceResponse<T>
     {
         // Default
