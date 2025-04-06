@@ -1,5 +1,6 @@
 ﻿using DataAccess.Repositories;
 using Domain.Models;
+using ServiceLayer.Helpers;
 using ServiceLayer.ServiceDtos.Flowers;
 using ServiceLayer.ServiceResponder;
 
@@ -34,6 +35,7 @@ namespace ServiceLayer.Services
                         CategoryId = flower.CategoryId,
                         TotalInventory = flower.TotalInventory,
                         CategoryName = flower.Category.Name,
+                        ImageUri = flower.ImageUri,
                         IsActive = flower.IsActive,
                     };
                     response.Success = true;
@@ -61,7 +63,7 @@ namespace ServiceLayer.Services
         /// </summary>
         /// <param name="dto">Create Flower dto object</param>
         /// <returns></returns>
-        public async Task<ServiceResponse<SFlowerDto>> CreateFlower(SCreateFlowerDto dto)
+        public async Task<ServiceResponse<SFlowerDto>> CreateFlower(SCreateFlowerDto dto, string? physicalPath = null)
         {
             ServiceResponse<SFlowerDto> response = new();
             try
@@ -72,6 +74,7 @@ namespace ServiceLayer.Services
                     Category? category = await _context.Categories.GetCategoryByIdAsync(dto.CategoryId);
                     if (category != null)
                     {
+                        string? imageUri = await ImageHelpers.TryStoreImage(dto.ImageFormFile, physicalPath);
                         Flower newFlower = new()
                         {
                             Timestamp = DateTime.Now,
@@ -80,6 +83,7 @@ namespace ServiceLayer.Services
                             Description = dto.Description,
                             Price = dto.Price,
                             TotalInventory = dto.TotalInventory,
+                            ImageUri = imageUri,
                             IsActive = true,
                         };
                         await _context.Flowers.CreateFlowerAsync(newFlower);
@@ -147,6 +151,7 @@ namespace ServiceLayer.Services
                         CategoryId = x.CategoryId,
                         TotalInventory = x.TotalInventory,
                         CategoryName = x.Category.Name,
+                        ImageUri = x.ImageUri,
                         IsActive = x.IsActive,
                     }).ToList();
 
@@ -171,7 +176,7 @@ namespace ServiceLayer.Services
         /// </summary>
         /// <param name="dto">Edit Flower dto object</param>
         /// <returns></returns>
-        public async Task<ServiceResponse<SFlowerDto>> EditFlower(SEditFlowerDto dto)
+        public async Task<ServiceResponse<SFlowerDto>> EditFlower(SEditFlowerDto dto, string? physicalPath = null)
         {
             ServiceResponse<SFlowerDto> response = new();
             try
@@ -179,11 +184,13 @@ namespace ServiceLayer.Services
                 Flower? flower = await _context.Flowers.GetFlowerByIdAsync(dto.Id, "Category");
                 if (flower != null)
                 {
+                    string? imageUri = await ImageHelpers.TryStoreImage(dto.ImageFormFile, physicalPath);
                     flower.Name = dto.Name;
                     flower.Description = dto.Description;
                     flower.Price = dto.Price;
                     flower.TotalInventory = dto.TotalInventory;
                     flower.CategoryId = dto.CategoryId;
+                    flower.ImageUri = imageUri;
                     _context.Flowers.UpdateFlower(flower);
                     await _context.SaveChangesAsync();
 
@@ -195,6 +202,8 @@ namespace ServiceLayer.Services
                         Description = flower.Description,
                         CategoryId = flower.CategoryId,
                         CategoryName = flower.Category.Name,
+                        TotalInventory = flower.TotalInventory,
+                        ImageUri = flower.ImageUri,
                         IsActive = flower.IsActive,
                     };
                     response.Success = true;
