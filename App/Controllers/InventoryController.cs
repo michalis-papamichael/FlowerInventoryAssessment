@@ -36,57 +36,65 @@ namespace App.Controllers
         {
             DatatableRequestModel dtModel = DatatablesHelper.ConstructModel(Request);
             ServiceResponse<SFlowersPagingDto> response = await _flowersServices.GetFlowersWithPaging(dtModel.Skip, dtModel.PageSize);
-            if (response.Success && response.Data != null)
+            try
             {
-                var dto = response.Data.Flowers;
-                if (dto.Count > 0)
+                if (response.Success && response.Data != null)
                 {
-                    // sorting
-                    //if (dtModel.CanSort)
-                    //{
-                    //    if (dtModel.IsAsc)
-                    //    {
-                    //    }
-                    //    else
-                    //    {
-                    //    }
-                    //}
-
-                    // searching
-                    if (!string.IsNullOrEmpty(dtModel.SearchValue))
+                    FlowersPagingDto pagingDto = _mapper.Map<FlowersPagingDto>(response.Data);
+                    List<FlowerDto> dto = pagingDto.Flowers;
+                    if (dto.Count > 0)
                     {
-                        string searchValue = dtModel.SearchValue.ToLower();
-                        dto = dto.Where(x => x.Name.ToLower().Contains(searchValue)
-                        || x.CategoryName.ToLower().Contains(searchValue)
-                        || x.Price.ToString().ToLower().Contains(searchValue)).ToList();
+                        // sorting
+                        //if (dtModel.CanSort)
+                        //{
+                        //    if (dtModel.IsAsc)
+                        //    {
+                        //    }
+                        //    else
+                        //    {
+                        //    }
+                        //}
+
+                        // searching
+                        if (!string.IsNullOrEmpty(dtModel.SearchValue))
+                        {
+                            string searchValue = dtModel.SearchValue.ToLower();
+                            dto = dto.Where(x => x.Name.ToLower().Contains(searchValue)
+                            || x.CategoryName.ToLower().Contains(searchValue)
+                            || x.Price.ToString().ToLower().Contains(searchValue)).ToList();
+                        }
+                        int totalrecords = pagingDto.TotalFlowers;
+                        var json = new
+                        {
+                            draw = dtModel.Draw,
+                            recordsFiltered = totalrecords,
+                            recordsTotal = totalrecords,
+                            data = dto,
+                        };
+                        return Ok(json);
                     }
-                    int totalrecords = response.Data.TotalFlowers;
-                    var json = new
-                    {
-                        draw = dtModel.Draw,
-                        recordsFiltered = totalrecords,
-                        recordsTotal = totalrecords,
-                        data = dto,
-                    };
-                    return Ok(json);
-                }
-
-            }
-            else
-            {
-                if (response.Exception != null)
-                {
-                    Log.Warning(response.Exception, response?.Message ?? "");
                 }
                 else
                 {
-                    Log.Warning(response?.Message ?? "");
+                    if (response.Exception != null)
+                    {
+                        Log.Warning(response.Exception, response?.Message ?? "");
+                    }
+                    else
+                    {
+                        Log.Warning(response?.Message ?? "");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
             }
             var errorjson = new
             {
                 draw = dtModel.Draw,
+                recordsFiltered = 0,
                 recordsTotal = 0,
+                data = new List<FlowersPagingDto>(),
             };
             return Ok(errorjson);
         }
