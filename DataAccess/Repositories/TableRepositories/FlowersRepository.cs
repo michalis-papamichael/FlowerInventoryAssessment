@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,13 +30,36 @@ namespace DataAccess.Repositories.TableRepositories
         {
             return await _context.Flowers.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower() && x.CategoryId == categoryId && x.IsActive == isActive);
         }
-        public List<Flower> GetFlowersWithPaging(Func<Flower, bool> wherePred, int skip, int take, string? include = null)
+        public List<Flower> GetFlowersWithPaging(Func<Flower, bool> wherePred, int skip, int take, bool isDesc,string orderProp, string? search, string? include = null)
         {
+            var set = _context.Flowers;
+            IEnumerable<Flower> query;
             if (!string.IsNullOrEmpty(include))
             {
-                return _context.Flowers.Include(include).Where(wherePred).Skip(skip).Take(take).ToList();
+                query = set.Include(include).Where(wherePred);
             }
-            return _context.Flowers.Where(wherePred).Skip(skip).Take(take).ToList();
+            else
+            {
+                query = set.Where(wherePred);
+            }
+            PropertyDescriptor? prop = TypeDescriptor.GetProperties(typeof(Flower)).Find(orderProp, false);
+            if (isDesc)
+            {
+                query = query.OrderByDescending(x => prop.GetValue(x));
+            }
+            else
+            {
+                query = query.OrderBy(x => prop.GetValue(x));
+            }
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.Name.Contains(search, StringComparison.CurrentCultureIgnoreCase)
+                                || x.Category.Name.Contains(search, StringComparison.CurrentCultureIgnoreCase)
+                                || x.Price.ToString().Contains(search, StringComparison.CurrentCultureIgnoreCase))
+                    .ToList();
+
+            }
+            return query.Skip(skip).Take(take).ToList();
         }
         public int CountFlowers(Func<Flower,bool> wherePred)
         {

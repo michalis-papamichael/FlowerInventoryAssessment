@@ -130,14 +130,14 @@ namespace ServiceLayer.Services
         /// <param name="skip">Amount of data to skip</param>
         /// <param name="take">Amount of data to take</param>
         /// <returns></returns>
-        public ServiceResponse<SFlowersPagingDto> GetFlowersWithPaging(int skip, int take)
+        public ServiceResponse<SFlowersPagingDto> GetFlowersWithPaging(int skip, int take, bool isDesc, string orderProp, string? search)
         {
             ServiceResponse<SFlowersPagingDto> response = new();
             try
             {
                 SFlowersPagingDto flowersPaging = new();
 
-                List<SFlowerDto> flowers = _context.Flowers.GetFlowersWithPaging(x => x.IsActive == true, skip, take, include: "Category")
+                List<SFlowerDto> flowers = _context.Flowers.GetFlowersWithPaging(x => x.IsActive == true, skip, take, isDesc, orderProp, search, include: "Category")
                     .Select(x => new SFlowerDto()
                     {
                         Id = x.Id,

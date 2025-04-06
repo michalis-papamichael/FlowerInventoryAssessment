@@ -59,9 +59,10 @@ namespace App.Controllers
         [HttpPost]
         public IActionResult GetFlowers()
         {
-            string[] dtCols = { "Name", "CategoryName", "Price", "Inventory" };
+            string[] dtCols = { "Name", "CategoryId", "Price", "TotalInventory" };
             DatatableRequestModel dtModel = DatatablesHelper.ConstructModel(Request);
-            ServiceResponse<SFlowersPagingDto> response = _flowersServices.GetFlowersWithPaging(dtModel.Skip, dtModel.PageSize);
+            ServiceResponse<SFlowersPagingDto> response = _flowersServices
+                .GetFlowersWithPaging(dtModel.Skip, dtModel.PageSize, !dtModel.IsAsc, dtCols[dtModel.SortColIndex], dtModel.SearchValue?.ToLower());
             try
             {
                 if (response.Success && response.Data != null)
@@ -70,33 +71,6 @@ namespace App.Controllers
                     List<FlowerDto> dto = pagingDto.Flowers;
                     if (dto.Count > 0)
                     {
-                        // sorting
-                        if (dtModel.CanSort)
-                        {
-                            // sorting by finding the property name
-                            string property = dtCols[dtModel.SortColIndex];
-                            PropertyDescriptor? prop = TypeDescriptor.GetProperties(typeof(FlowerDto)).Find(property, false);
-                            if (prop != null)
-                            {
-                                if (dtModel.IsAsc)
-                                {
-                                    dto = dto.OrderByDescending(x => prop.GetValue(x)).ToList();
-                                }
-                                else
-                                {
-                                    dto = dto.OrderBy(x => prop.GetValue(x)).ToList();
-                                }
-                            }
-                        }
-
-                        // searching
-                        if (!string.IsNullOrEmpty(dtModel.SearchValue))
-                        {
-                            string searchValue = dtModel.SearchValue.ToLower();
-                            dto = dto.Where(x => x.Name.ToLower().Contains(searchValue)
-                            || x.CategoryName.ToLower().Contains(searchValue)
-                            || x.Price.ToString().ToLower().Contains(searchValue)).ToList();
-                        }
                         int totalrecords = pagingDto.TotalFlowers;
                         var json = new
                         {
