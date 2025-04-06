@@ -21,6 +21,7 @@ namespace App.Extensions
         {
             services.AddTransient<FlowersServices>();
             services.AddTransient<CategoriesServices>();
+            services.AddTransient<StatisticsServices>();
         }
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
