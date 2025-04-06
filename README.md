@@ -7,6 +7,8 @@
    - You may need to change the *FILENAME* path inside sql scripts. The path is according to what Sql Server version you have installed or in what location Sql server exists.
    - The you can find the *FILENAME* path at the top of each script.
 
+3) You can create a folder named *flowers* in your C:\ drive or let the application create for yourself.
+
 ## Implementation Description
 Project implementation started with reviewing the given requirements and making research for additional insight. Furthermore designed simple wireframes (pen & paper) for the views and how the navigation will be, in order to visualize the app ahead of time. Next in line was desinging the database and while at the same time designing the repositories & services that would exist in app. After that design & research was just developing the application (views & functionality).
 
