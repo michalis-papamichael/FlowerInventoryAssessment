@@ -130,7 +130,7 @@ namespace ServiceLayer.Services
         /// <param name="skip">Amount of data to skip</param>
         /// <param name="take">Amount of data to take</param>
         /// <returns></returns>
-        public async Task<ServiceResponse<SFlowersPagingDto>> GetFlowersWithPaging(int skip, int take)
+        public ServiceResponse<SFlowersPagingDto> GetFlowersWithPaging(int skip, int take)
         {
             ServiceResponse<SFlowersPagingDto> response = new();
             try
@@ -151,7 +151,7 @@ namespace ServiceLayer.Services
                     }).ToList();
 
                 flowersPaging.Flowers = flowers;
-                flowersPaging.TotalFlowers = await _context.Flowers.CountFlowers();
+                flowersPaging.TotalFlowers = _context.Flowers.CountFlowers(x => x.IsActive == true);
 
                 response.Data = flowersPaging;
                 response.Success = true;

@@ -34,11 +34,11 @@ namespace App.Controllers
         }
         // used for datatable calls
         [HttpPost]
-        public async Task<IActionResult> GetFlowers()
+        public IActionResult GetFlowers()
         {
             string[] dtCols = { "Name", "CategoryName", "Price", "Inventory" };
             DatatableRequestModel dtModel = DatatablesHelper.ConstructModel(Request);
-            ServiceResponse<SFlowersPagingDto> response = await _flowersServices.GetFlowersWithPaging(dtModel.Skip, dtModel.PageSize);
+            ServiceResponse<SFlowersPagingDto> response = _flowersServices.GetFlowersWithPaging(dtModel.Skip, dtModel.PageSize);
             try
             {
                 if (response.Success && response.Data != null)
