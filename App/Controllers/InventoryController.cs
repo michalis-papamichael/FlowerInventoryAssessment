@@ -163,7 +163,7 @@ namespace App.Controllers
                 {
                     model.Messages.Add(new ViewMessage()
                     {
-                        Message = response.Message,
+                        Message = "Failed to create",
                         Status = Enums.MessageStatus.Warning,
                     });
                     return View(model);
