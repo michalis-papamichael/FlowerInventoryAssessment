@@ -1,5 +1,7 @@
 using App.Extensions;
 using App.Helpers;
+using App.Statics;
+using Microsoft.Extensions.FileProviders;
 namespace App
 {
     public class Program
@@ -8,7 +10,7 @@ namespace App
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            bool isTesting = builder.Configuration.GetValue<bool>("IsTesting");            
+            bool isTesting = builder.Configuration.GetValue<bool>("IsTesting");
             Scripts.ConfigureEnvViaPowershell(isTesting);
 
             // Add services to the container.
@@ -35,7 +37,17 @@ namespace App
             app.ConfigureGlobalLogger();
 
             app.UseHttpsRedirection();
+
+            if (!Directory.Exists(AppPaths.FLOWERS_PHYSICAL_STORAGE))
+            {
+                Directory.CreateDirectory(AppPaths.FLOWERS_PHYSICAL_STORAGE);
+            }
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(AppPaths.FLOWERS_PHYSICAL_STORAGE),
+                RequestPath = AppPaths.STATIC_FILES
+            });
 
             app.UseRouting();
 
