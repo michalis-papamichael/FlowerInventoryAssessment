@@ -25,17 +25,17 @@ namespace DataAccess.Repositories.TableRepositories
             }
             return await _context.Flowers.FindAsync(id);
         }
-        public async Task<Flower?> GetFlowerByNameAndCategoryIdAsync(string name, int categoryId, string? include = null)
+        public async Task<Flower?> GetFlowerByNameAndCategoryIdAsync(string name, int categoryId, bool isActive, string? include = null)
         {
-            return await _context.Flowers.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower() && x.CategoryId == categoryId);
+            return await _context.Flowers.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower() && x.CategoryId == categoryId && x.IsActive == isActive);
         }
-        public async Task<List<Flower>> GetFlowersWithPagingAsync(int skip, int take, string? include = null)
+        public List<Flower> GetFlowersWithPaging(Func<Flower, bool> wherePred, int skip, int take, string? include = null)
         {
             if (!string.IsNullOrEmpty(include))
             {
-                return await _context.Flowers.Include(include).Skip(skip).Take(take).ToListAsync();
+                return _context.Flowers.Include(include).Where(wherePred).Skip(skip).Take(take).ToList();
             }
-            return await _context.Flowers.Skip(skip).Take(take).ToListAsync();
+            return _context.Flowers.Where(wherePred).Skip(skip).Take(take).ToList();
         }
         public async Task<int> CountFlowers()
         {

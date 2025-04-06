@@ -20,7 +20,7 @@ namespace Tests
             _factory = factory;
         }
         [Fact]
-        public async Task GetFlowers_Should_Return_MoreThanZero()
+        public void GetFlowers_Should_Return_MoreThanZero()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace Tests
                     var _context = scope.ServiceProvider.GetRequiredService<Repository>();
 
                     //Acts
-                    List<Flower> flower = await _context.Flowers.GetFlowersWithPagingAsync(0, 10, "Category");
+                    List<Flower> flower = _context.Flowers.GetFlowersWithPaging(x => x.IsActive == true, 0, 10, "Category");
                     int total = flower.Count();
 
                     //Assert

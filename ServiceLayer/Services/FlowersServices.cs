@@ -62,7 +62,7 @@ namespace ServiceLayer.Services
             ServiceResponse<SFlowerDto> response = new();
             try
             {
-                Flower? flower = await _context.Flowers.GetFlowerByNameAndCategoryIdAsync(dto.Name, dto.CategoryId, "Category");
+                Flower? flower = await _context.Flowers.GetFlowerByNameAndCategoryIdAsync(dto.Name, dto.CategoryId, isActive: true, "Category");
                 if (flower == null)
                 {
                     Category? category = await _context.Categories.GetCategoryByIdAsync(dto.CategoryId);
@@ -127,7 +127,7 @@ namespace ServiceLayer.Services
             {
                 SFlowersPagingDto flowersPaging = new();
 
-                List<SFlowerDto> flowers = (await _context.Flowers.GetFlowersWithPagingAsync(skip, take, include: "Category"))
+                List<SFlowerDto> flowers = _context.Flowers.GetFlowersWithPaging(x => x.IsActive == true, skip, take, include: "Category")
                     .Select(x => new SFlowerDto()
                     {
                         Id = x.Id,
