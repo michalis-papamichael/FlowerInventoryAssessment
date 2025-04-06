@@ -4,7 +4,8 @@
 1) Find the env.ps1 inside FlowerInventoryAssessment/App/Scripts/ directory and change it to match your own connection strings (you can run it yourself or let the app run it)
 2) At the same directory mentioned above find the Sql scripts for the creation of the databases used and execute them in your SQL Server management studio
 
-   - You may need to change the location of your where mdf files will be stored according to what Sql Server version you have installed or in what location Sql server exists
+   - You may need to change the *FILENAME* path inside sql scripts. The path is according to what Sql Server version you have installed or in what location Sql server exists.
+   - The you can find the *FILENAME* path at the top of each script.
 
 ## Implementation Description
 Project implementation started with reviewing the given requirements and making research for additional insight. Furthermore designed simple wireframes (pen & paper) for the views and how the navigation will be, in order to visualize the app ahead of time. Next in line was desinging the database and while at the same time designing the repositories & services that would exist in app. After that design & research was just developing the application (views & functionality).
@@ -30,3 +31,4 @@ Challenges were few and not so technical in my opinion
 - MVC
 - Sql Server 2022 Express
 - Entitiy Framework Core
+- Visual Stutio Community 2022
