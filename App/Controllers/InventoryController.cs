@@ -229,6 +229,7 @@ namespace App.Controllers
                         Message = "Edit successfully",
                         Status = Enums.MessageStatus.Success,
                     });
+                    dto.CategoryId = model.CategoryId;
                     dto.Categories = model.Categories;
                     if (dto.Categories.Count > 0)
                     {
