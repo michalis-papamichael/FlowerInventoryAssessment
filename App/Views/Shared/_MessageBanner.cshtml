@@ -1,0 +1,31 @@
+﻿
+@model List<App.Models.ViewMessage>
+
+@foreach (var m in Model)
+{
+    @if (m.Status==App.Enums.MessageStatus.Success)
+    {
+        <div class="card mb-2 py-1 border-left-success">
+            <div class="card-body">
+                @m.Message
+            </div>
+        </div>
+    }
+    else if (m.Status == App.Enums.MessageStatus.Warning)
+    {
+        <div class="card mb-2 py-1 border-left-warning">
+            <div class="card-body">
+                @m.Message
+            </div>
+        </div>
+    }
+    else if (m.Status == App.Enums.MessageStatus.Error)
+    {
+        <div class="card mb-2 py-1 border-left-danger">
+            <div class="card-body">
+                @m.Message
+            </div>
+        </div>
+    }
+}
+
