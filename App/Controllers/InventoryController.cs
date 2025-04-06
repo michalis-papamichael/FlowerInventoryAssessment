@@ -10,6 +10,7 @@ using ServiceLayer.ServiceDtos.Categories;
 using ServiceLayer.ServiceDtos.Flowers;
 using ServiceLayer.ServiceResponder;
 using ServiceLayer.Services;
+using System.ComponentModel;
 
 namespace App.Controllers
 {
@@ -35,6 +36,7 @@ namespace App.Controllers
         [HttpPost]
         public async Task<IActionResult> GetFlowers()
         {
+            string[] dtCols = { "Name", "CategoryName", "Price", "Inventory" };
             DatatableRequestModel dtModel = DatatablesHelper.ConstructModel(Request);
             ServiceResponse<SFlowersPagingDto> response = await _flowersServices.GetFlowersWithPaging(dtModel.Skip, dtModel.PageSize);
             try
@@ -46,15 +48,23 @@ namespace App.Controllers
                     if (dto.Count > 0)
                     {
                         // sorting
-                        //if (dtModel.CanSort)
-                        //{
-                        //    if (dtModel.IsAsc)
-                        //    {
-                        //    }
-                        //    else
-                        //    {
-                        //    }
-                        //}
+                        if (dtModel.CanSort)
+                        {
+                            // sorting by finding the property name
+                            string property = dtCols[dtModel.SortColIndex];
+                            PropertyDescriptor? prop = TypeDescriptor.GetProperties(typeof(FlowerDto)).Find(property, false);
+                            if (prop != null)
+                            {
+                                if (dtModel.IsAsc)
+                                {
+                                    dto = dto.OrderByDescending(x => prop.GetValue(x)).ToList();
+                                }
+                                else
+                                {
+                                    dto = dto.OrderBy(x => prop.GetValue(x)).ToList();
+                                }
+                            }
+                        }
 
                         // searching
                         if (!string.IsNullOrEmpty(dtModel.SearchValue))
