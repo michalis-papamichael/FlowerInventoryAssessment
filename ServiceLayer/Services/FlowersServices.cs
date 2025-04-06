@@ -152,9 +152,9 @@ namespace ServiceLayer.Services
             }
             return response;
         }
-        public async Task<ServiceResponse<SEditFlowerDto>> EditFlower(SEditFlowerDto dto)
+        public async Task<ServiceResponse<SFlowerDto>> EditFlower(SEditFlowerDto dto)
         {
-            ServiceResponse<SEditFlowerDto> response = new();
+            ServiceResponse<SFlowerDto> response = new();
             try
             {
                 Flower? flower = await _context.Flowers.GetFlowerByIdAsync(dto.Id, "Category");
@@ -168,6 +168,15 @@ namespace ServiceLayer.Services
                     _context.Flowers.UpdateFlower(flower);
                     await _context.SaveChangesAsync();
 
+                    response.Data = new SFlowerDto()
+                    {
+                        Id = flower.Id,
+                        Name = flower.Name,
+                        Price = flower.Price,
+                        Description = flower.Description,
+                        CategoryId = flower.CategoryId,
+                        CategoryName = flower.Category.Name,
+                    };
                     response.Success = true;
                     response.Message = "Editted";
                 }
