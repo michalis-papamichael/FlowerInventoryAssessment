@@ -50,9 +50,9 @@ namespace DataAccess.Repositories.TableRepositories
             updatedFlwoer.LastUpdateTimestamp = DateTime.Now;
             _context.Flowers.Update(updatedFlwoer);
         }
-        public async Task DeleteFlowerByIdAsync(int id)
+        public async Task<Flower?> DeleteFlowerByIdAsync(int id,string? include = null)
         {
-            Flower? flower = await GetFlowerByIdAsync(id);
+            Flower? flower = await GetFlowerByIdAsync(id, include);
             if (flower != null)
             {
                 flower.IsActive = false;
@@ -60,6 +60,7 @@ namespace DataAccess.Repositories.TableRepositories
 
                 _context.Flowers.Update(flower);
             }
+            return flower;
         }
     }
 }
