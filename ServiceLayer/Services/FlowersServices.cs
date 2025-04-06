@@ -51,7 +51,7 @@ namespace ServiceLayer.Services
             {
                 response.Data = null;
                 response.Success = false;
-                response.Message = "GetFlowerByIdAsync";
+                response.Message = nameof(GetFlowerByIdAsync);
                 response.Exception = ex;
             }
             return response;
@@ -112,7 +112,7 @@ namespace ServiceLayer.Services
             {
                 response.Data = null;
                 response.Success = false;
-                response.Message = "CreateFlower";
+                response.Message = nameof(CreateFlower);
                 response.Exception = ex;
             }
             return response;
@@ -147,7 +147,11 @@ namespace ServiceLayer.Services
             {
                 response.Data = null;
                 response.Success = false;
-                response.Message = "GetFlowersWithPaging";
+                response.Message = nameof(GetFlowersWithPaging);
+                response.Exception = ex;
+            }
+            return response;
+        }
         public async Task<ServiceResponse<SEditFlowerDto>> EditFlower(SEditFlowerDto dto)
         {
             ServiceResponse<SEditFlowerDto> response = new();
