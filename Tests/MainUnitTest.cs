@@ -31,7 +31,7 @@ namespace Tests
                     var _context = scope.ServiceProvider.GetRequiredService<Repository>();
 
                     //Acts
-                    List<Flower> flower = _context.Flowers.GetFlowersWithPaging(x => x.IsActive == true, 0, 10, "Category");
+                    List<Flower> flower = _context.Flowers.GetFlowersWithPaging(x => x.IsActive == true, 0, 10, true, "Name", null, "Category");
                     int total = flower.Count();
 
                     //Assert
