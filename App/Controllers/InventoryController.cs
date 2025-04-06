@@ -115,10 +115,58 @@ namespace App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateFlower(object model)
+        public async Task<IActionResult> CreateFlower(CreateFlowerDto model)
         {
             ViewData["Layout"] = "_InventoryLayout";
-            return View();
+            try
+            {
+                ServiceResponse<List<SCategoryDto>> resp = await _categoriesServices.GetCategories();
+                if (resp.Success)
+                {
+                    model.Categories = _mapper.Map<List<CategoryDto>>(resp.Data);
+                }
+                if (!ModelState.IsValid)
+                {
+                    model.Messages.Add(new ViewMessage()
+                    {
+                        Message = "Invalid Input",
+                        Status = Enums.MessageStatus.Warning,
+                    });
+                    return View(model);
+                }
+                SCreateFlowerDto sdto = _mapper.Map<SCreateFlowerDto>(model);
+                ServiceResponse<SFlowerDto> response = await _flowersServices.CreateFlower(sdto);
+                if (response.Success && response.Data != null)
+                {
+                    CreateFlowerDto dto = new CreateFlowerDto();
+                    dto.Messages.Add(new ViewMessage()
+                    {
+                        Message = "Successful creation",
+                        Status = Enums.MessageStatus.Success,
+                    });
+                    dto.Categories = model.Categories;
+                    if (dto.Categories.Count>0)
+                    {
+                        return View(dto);
+                    }
+                    return RedirectToAction("Details");
+                }
+                if (model.Categories.Count>0)
+                {
+                    model.Messages.Add(new ViewMessage()
+                    {
+                        Message = response.Message,
+                        Status = Enums.MessageStatus.Warning,
+                    });
+                    return View(model);
+                }
+                return RedirectToAction("Details");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"{nameof(CreateFlower)} operation", ex);
+            }
+            return BadRequest();
         }
     }
 }
