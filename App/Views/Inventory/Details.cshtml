@@ -4,6 +4,15 @@
 @section Styles {
     <!-- Custom styles for this page -->
     <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        #dt-flowers_filter label {
+            width: 100%
+        }
+
+        #dt-flowers_filter label input {
+            width: 100%
+        }
+    </style>
 }
 <div>
     <div class="card shadow mb-4">
@@ -63,7 +72,7 @@
                     "datatype": "json"
                 },
                 language: {
-                    "searchPlaceholder": "Flower, Category or Price",
+                    "searchPlaceholder": "Flower, Category, Price, or Inventory",
                 },
                 columns:[
                     {title:"Flower",data:"name"},
@@ -82,7 +91,10 @@
                                     </div >`;
                         }
                     },
-                ]
+                ],
+                initComplete: function (settings, json) {
+                    $("#dt-flowers_filter").parent().parent().children()[0].remove();
+                }
             });
 
             $("#deleteForm").validate({
