@@ -1,4 +1,4 @@
-﻿@model List<ServiceLayer.ServiceDtos.Categories.SCategoryDto>
+﻿@model App.Dtos.Flowers.CreateFlowerDto
 @{
     ViewData["Title"] = "Create";
 }
@@ -12,6 +12,7 @@
         </div>
         <div class="card-body">
             <div class="col-md-6">
+                @await Html.PartialAsync("_MessageBanner", model: Model.Messages)
                 <form id="createFlowerForm" asp-antiforgery="true" asp-controller="Inventory" asp-action="CreateFlower">
                     <div class="form-group">
                         <label for="name">Flower name</label>
@@ -35,10 +36,10 @@
                         <label for="categoryId">Category</label>
                         <select id="categoryId" name="categoryId" class="form-control">
                             <option selected value="">Choose Category</option>
-                            @foreach (var c in Model)
+                            @foreach (var c in Model.Categories)
                             {
-                                <option value="@c.Id">@c.Name</option>                                
-                            } 
+                                <option value="@c.Id">@c.Name</option>
+                            }
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Create</button>
