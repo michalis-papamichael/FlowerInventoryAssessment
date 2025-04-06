@@ -202,5 +202,45 @@ namespace ServiceLayer.Services
             }
             return response;
         }
+        public async Task<ServiceResponse<SFlowerDto>> DeleteFlowerById(int id)
+        {
+            ServiceResponse<SFlowerDto> response = new();
+            try
+            {
+                Flower? flower = await _context.Flowers.DeleteFlowerByIdAsync(id, "Category");
+                if (flower != null)
+                {
+                    await _context.SaveChangesAsync();
+
+                    response.Data = new SFlowerDto()
+                    {
+                        Id = flower.Id,
+                        Name = flower.Name,
+                        Price = flower.Price,
+                        Description = flower.Description,
+                        CategoryId = flower.CategoryId,
+                        CategoryName = flower.Category.Name,
+                        IsActive = flower.IsActive,
+                    };
+                    response.Success = true;
+                    response.Message = "Deleted";
+                }
+                else
+                {
+                    response.Data = null;
+                    response.Success = false;
+                    response.Message = "DoesNotExist";
+                    response.ErrorMessages.Add("Flower does not exists");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.Success = false;
+                response.Message = nameof(DeleteFlowerById);
+                response.Exception = ex;
+            }
+            return response;
+        }
     }
 }
