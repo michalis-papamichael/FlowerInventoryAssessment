@@ -1,5 +1,6 @@
 ﻿using App.Dtos.Categories;
 using App.Dtos.Flowers;
+using App.Dtos.Statistics;
 using App.Helpers;
 using App.Models;
 using AutoMapper;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using ServiceLayer.ServiceDtos.Categories;
 using ServiceLayer.ServiceDtos.Flowers;
+using ServiceLayer.ServiceDtos.Statistics;
 using ServiceLayer.ServiceResponder;
 using ServiceLayer.Services;
 using System.ComponentModel;
@@ -18,12 +20,33 @@ namespace App.Controllers
     {
         private readonly FlowersServices _flowersServices;
         private readonly CategoriesServices _categoriesServices;
+        private readonly StatisticsServices _statisticsServices;
         private readonly IMapper _mapper;
-        public InventoryController(FlowersServices flowersServices, CategoriesServices categoriesServices, IMapper mapper)
+        public InventoryController(FlowersServices flowersServices, CategoriesServices categoriesServices, StatisticsServices statisticsServices, IMapper mapper)
         {
             _flowersServices = flowersServices;
             _categoriesServices = categoriesServices;
+            _statisticsServices = statisticsServices;
             _mapper = mapper;
+        }
+        public IActionResult Home()
+        {
+            ViewData["Layout"] = "_InventoryLayout";
+            ViewData["HeadingContent"] = "General statistics of your inventory system.";
+            ServiceResponse<SDashboardStatisticsDto> response = _statisticsServices.GetDashboardStatistics();
+            if (response.Success)
+            {
+                DashboardStatisticsDto dto = _mapper.Map<DashboardStatisticsDto>(response.Data);
+                dto.ShoStatistics=true;
+                return View(dto);
+            }
+            ViewData["HeadingContent"] = "Welcome to your inventory system where you can manage your flowers.";
+            Log.Warning(response.Message, response.Exception);
+            DashboardStatisticsDto dtoo = new DashboardStatisticsDto()
+            {
+                ShoStatistics = false,
+            };
+            return View(dtoo);
         }
         public IActionResult Details()
         {
