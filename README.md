@@ -14,6 +14,16 @@ Challenges were few and not so technical in my opinion
 1)   Firstly was deciding the assumptions to complete the application (clearly such an app could be way bigger)
 2)   My unfamiliarity with service layer architecture (which made me spent additional time on research and refinements of code)
 
+## Assumptions
+1)   No authentication (by no means such an app needs no authentication system)
+2)   Will be used by one user at a time (hence the first point)
+3)   Application will be published on IIS
+####   Database related Assumptions
+4)   Wouldn't need to keep track of inventory changes (separate table for Flower inventory changes)
+5)   No track of suppliers/providers/sellers of flowers
+6)   No track of which seasons each flower can be in inventory
+7)   No track of conditions(temperature, humidity, etc.) for flowers to survive
+
 ## Technologies
 - C#
 - .Net 8
