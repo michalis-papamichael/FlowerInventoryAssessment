@@ -24,6 +24,10 @@ Challenges were few and not so technical in my opinion
 5)   No track of suppliers/providers/sellers of flowers
 6)   No track of which seasons each flower can be in inventory
 7)   No track of conditions(temperature, humidity, etc.) for flowers to survive
+####   Image upload related Assumptions
+8)   The user has a __C drive__ as root
+9)   There are no security concerns
+10)   There are no issues with size
 
 ## Technologies
 - C#
