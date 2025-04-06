@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Inventory" asp-action="Details">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Inventory" asp-action="Home">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -13,10 +13,10 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li id="nav-home" class="nav-item">
+        <a class="nav-link" asp-controller="Inventory" asp-action="Home">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+            <span>Home</span>
         </a>
     </li>
 
@@ -29,7 +29,7 @@
     </div>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li id="nav-details" class="nav-item">
         <a class="nav-link" asp-controller="Inventory" asp-action="Details">
             <i class="fas fa-fw fa-table"></i>
             <span>Details</span>
