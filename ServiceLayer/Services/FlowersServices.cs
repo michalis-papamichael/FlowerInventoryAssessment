@@ -35,6 +35,7 @@ namespace ServiceLayer.Services
                         CategoryId = flower.CategoryId,
                         TotalInventory = flower.TotalInventory,
                         CategoryName = flower.Category.Name,
+                        IsActive = flower.IsActive,
                     };
                     response.Success = true;
                     response.Message = "Ok";
@@ -88,6 +89,8 @@ namespace ServiceLayer.Services
                             Description = newFlower.Description,
                             CategoryId = newFlower.CategoryId,
                             CategoryName = category.Name,
+                            TotalInventory = newFlower.TotalInventory,
+                            IsActive = newFlower.IsActive,
                         };
                         response.Success = true;
                         response.Message = "Created";
@@ -134,6 +137,7 @@ namespace ServiceLayer.Services
                         CategoryId = x.CategoryId,
                         TotalInventory = x.TotalInventory,
                         CategoryName = x.Category.Name,
+                        IsActive = x.IsActive,
                     }).ToList();
 
                 flowersPaging.Flowers = flowers;
@@ -176,6 +180,7 @@ namespace ServiceLayer.Services
                         Description = flower.Description,
                         CategoryId = flower.CategoryId,
                         CategoryName = flower.Category.Name,
+                        IsActive = flower.IsActive,
                     };
                     response.Success = true;
                     response.Message = "Editted";
