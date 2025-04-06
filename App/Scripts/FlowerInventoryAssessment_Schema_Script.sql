@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [FlowerInventoryAssessment]    Script Date: 06/04/2025 4:02:31 pm ******/
+/****** Object:  Database [FlowerInventoryAssessment]    Script Date: 06/04/2025 11:20:08 pm ******/
 CREATE DATABASE [FlowerInventoryAssessment]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,7 +82,7 @@ ALTER DATABASE [FlowerInventoryAssessment] SET QUERY_STORE (OPERATION_MODE = REA
 GO
 USE [FlowerInventoryAssessment]
 GO
-/****** Object:  Table [dbo].[Categories]    Script Date: 06/04/2025 4:02:31 pm ******/
+/****** Object:  Table [dbo].[Categories]    Script Date: 06/04/2025 11:20:08 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ CREATE TABLE [dbo].[Categories](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Flowers]    Script Date: 06/04/2025 4:02:31 pm ******/
+/****** Object:  Table [dbo].[Flowers]    Script Date: 06/04/2025 11:20:08 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -112,6 +112,7 @@ CREATE TABLE [dbo].[Flowers](
 	[Price] [decimal](9, 2) NOT NULL,
 	[TotalInventory] [int] NOT NULL,
 	[CategoryID] [int] NOT NULL,
+	[ImageUri] [nvarchar](max) NULL,
 	[IsActive] [bit] NOT NULL,
 	[DeletionTimestamp] [datetimeoffset](7) NULL,
 	[LastUpdateTimestamp] [datetimeoffset](7) NULL,
@@ -119,7 +120,7 @@ CREATE TABLE [dbo].[Flowers](
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Flowers]  WITH CHECK ADD  CONSTRAINT [FK_Flowers_Categories] FOREIGN KEY([CategoryID])
 REFERENCES [dbo].[Categories] ([ID])
