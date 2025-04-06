@@ -10,6 +10,7 @@ namespace App.AutoMapperProfiles.Flowers
         {
             CreateMap<SEditFlowerDto, EditFlowerDto>();
             CreateMap<EditFlowerDto, SEditFlowerDto>();
+            CreateMap<SFlowerDto, EditFlowerDto>();
         }
     }
 }
