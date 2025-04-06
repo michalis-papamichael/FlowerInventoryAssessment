@@ -18,6 +18,10 @@ namespace ServiceLayer.Services
         {
             _context = context;
         }
+        /// <summary>
+        /// Get list of flower categories
+        /// </summary>
+        /// <returns></returns>
         public async Task<ServiceResponse<List<SCategoryDto>>> GetCategories()
         {
             ServiceResponse<List<SCategoryDto>> response = new();
