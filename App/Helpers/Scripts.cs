@@ -29,7 +29,7 @@ namespace App.Helpers
             if (!File.Exists(ps1File))
             {
                 string workingDirectory = Environment.CurrentDirectory;
-                // for binary file
+                // for binary file - mainly production
                 projectDir = Directory.GetParent(workingDirectory)?.Parent?.Parent?.FullName;
                 ps1File = @$"{projectDir}\Scripts\env.ps1";
                 if (!File.Exists(ps1File))
