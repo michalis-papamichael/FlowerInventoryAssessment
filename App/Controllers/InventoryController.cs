@@ -3,6 +3,7 @@ using App.Dtos.Flowers;
 using App.Dtos.Statistics;
 using App.Helpers;
 using App.Models;
+using App.Statics;
 using AutoMapper;
 using Azure;
 using Microsoft.AspNetCore.Mvc;
@@ -142,7 +143,7 @@ namespace App.Controllers
                     return View(model);
                 }
                 SCreateFlowerDto sdto = _mapper.Map<SCreateFlowerDto>(model);
-                ServiceResponse<SFlowerDto> response = await _flowersServices.CreateFlower(sdto);
+                ServiceResponse<SFlowerDto> response = await _flowersServices.CreateFlower(sdto, AppPaths.FLOWERS_PHYSICAL_STORAGE);
                 if (response.Success && response.Data != null)
                 {
                     CreateFlowerDto dto = new CreateFlowerDto();
@@ -217,7 +218,7 @@ namespace App.Controllers
                     return View(model);
                 }
                 SEditFlowerDto sdto = _mapper.Map<SEditFlowerDto>(model);
-                ServiceResponse<SFlowerDto> response = await _flowersServices.EditFlower(sdto);
+                ServiceResponse<SFlowerDto> response = await _flowersServices.EditFlower(sdto, AppPaths.FLOWERS_PHYSICAL_STORAGE);
                 if (response.Success && response.Data != null)
                 {
                     EditFlowerDto dto = new EditFlowerDto();
@@ -226,6 +227,7 @@ namespace App.Controllers
                         Message = "Edit successfully",
                         Status = Enums.MessageStatus.Success,
                     });
+                    dto.ImageUri = response.Data.ImageUri;
                     dto.CategoryId = model.CategoryId;
                     dto.Categories = model.Categories;
                     if (dto.Categories.Count > 0)
