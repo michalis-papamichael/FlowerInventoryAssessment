@@ -19,5 +19,9 @@ namespace DataAccess.Repositories.TableRepositories
         {
             return await _context.Categories.ToListAsync();
         }
+        public int CountCategories(Func<Category, bool> wherePred)
+        {
+            return _context.Categories.Where(wherePred).Count();
+        }
     }
 }
