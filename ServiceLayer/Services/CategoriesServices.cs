@@ -1,13 +1,6 @@
-﻿using Azure;
-using DataAccess.Repositories;
+﻿using DataAccess.Repositories;
 using ServiceLayer.ServiceDtos.Categories;
-using ServiceLayer.ServiceDtos.Flowers;
 using ServiceLayer.ServiceResponder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
 {
