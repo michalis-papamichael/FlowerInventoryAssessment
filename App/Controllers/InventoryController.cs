@@ -110,7 +110,6 @@ namespace App.Controllers
                 return View(dto);
             }
             Log.Warning(response.Message, response.Exception);
-            //todo handle badrequest globally
             return BadRequest();
         }
         [HttpPost]
@@ -165,6 +164,81 @@ namespace App.Controllers
             catch (Exception ex)
             {
                 Log.Error($"{nameof(CreateFlower)} operation", ex);
+            }
+            return BadRequest();
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditFlower(int id)
+        {
+            ViewData["Layout"] = "_InventoryLayout";
+            ServiceResponse<SFlowerDto> response = await _flowersServices.GetFlowerByIdAsync(id);
+            if (response.Success && response.Data != null)
+            {
+                EditFlowerDto dto = new EditFlowerDto();
+                dto = _mapper.Map<EditFlowerDto>(response.Data);
+                ServiceResponse<List<SCategoryDto>> resp = await _categoriesServices.GetCategories();
+                if (resp.Success && resp.Data != null)
+                {
+                    List<CategoryDto> categories = _mapper.Map<List<CategoryDto>>(resp.Data);
+                    dto.Categories = categories;
+                }
+                return View(dto);
+            }
+            Log.Warning(response.Message, response.Exception);
+            return RedirectToAction("Details");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditFlower(EditFlowerDto model)
+        {
+            ViewData["Layout"] = "_InventoryLayout";
+            try
+            {
+                ServiceResponse<List<SCategoryDto>> resp = await _categoriesServices.GetCategories();
+                if (resp.Success)
+                {
+                    model.Categories = _mapper.Map<List<CategoryDto>>(resp.Data);
+                }
+                if (!ModelState.IsValid)
+                {
+                    model.Messages.Add(new ViewMessage()
+                    {
+                        Message = "Invalid Input",
+                        Status = Enums.MessageStatus.Warning,
+                    });
+                    return View(model);
+                }
+                SEditFlowerDto sdto = _mapper.Map<SEditFlowerDto>(model);
+                ServiceResponse<SFlowerDto> response = await _flowersServices.EditFlower(sdto);
+                if (response.Success && response.Data != null)
+                {
+                    EditFlowerDto dto = new EditFlowerDto();
+                    dto.Messages.Add(new ViewMessage()
+                    {
+                        Message = "Edit successfully",
+                        Status = Enums.MessageStatus.Success,
+                    });
+                    dto.Categories = model.Categories;
+                    if (dto.Categories.Count > 0)
+                    {
+                        return View(dto);
+                    }
+                    return RedirectToAction("Details");
+                }
+                if (model.Categories.Count > 0)
+                {
+                    model.Messages.Add(new ViewMessage()
+                    {
+                        Message = response.Message,
+                        Status = Enums.MessageStatus.Warning,
+                    });
+                    return View(model);
+                }
+                return RedirectToAction("Details");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"{nameof(EditFlower)} operation", ex);
             }
             return BadRequest();
         }
