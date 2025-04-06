@@ -80,6 +80,19 @@
                     {title:"Price",data:"price"},
                     {title:"Inventory",data:"totalInventory"},
                     {
+                        title:"Image",
+                        data: "imageUri",
+                        searchable: false,
+                        orderable: false,
+                        render: function (data, type, full, row, meta) {
+                            if(data){
+                                return `<img src="@App.Statics.AppPaths.STATIC_FILES/${data}" style="width:80px; height:90px; alt="No Image">`;
+                            }else{
+                                return `<span>No Image</span>`
+                            }
+                        }
+                    },
+                    {
                         title: "Actions",
                         searchable: false,
                         orderable: false,
