@@ -1,3 +1,3 @@
 [Environment]::SetEnvironmentVariable("FlowerInventoryAssessment:connection", "Server={server};Database=FlowerInventoryAssessment;Trusted_Connection=False;User ID={user};Password={psw};TrustServerCertificate=True", "Machine")
-[Environment]::SetEnvironmentVariable("FlowerInventoryAssessmentLogs:connection", "Server=server;Database=FlowerInventoryAssessmentLogs;Trusted_Connection=False;User ID={user};Password={psw};TrustServerCertificate=True", "Machine")
+[Environment]::SetEnvironmentVariable("FlowerInventoryAssessmentLogs:connection", "Server={server};Database=FlowerInventoryAssessmentLogs;Trusted_Connection=False;User ID={user};Password={psw};TrustServerCertificate=True", "Machine")
 pause
