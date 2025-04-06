@@ -1,7 +1,11 @@
-﻿using App.Helpers;
+﻿using App.Dtos.Categories;
+using App.Dtos.Flowers;
+using App.Helpers;
 using App.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using ServiceLayer.ServiceDtos.Categories;
 using ServiceLayer.ServiceDtos.Flowers;
 using ServiceLayer.ServiceResponder;
 using ServiceLayer.Services;
@@ -11,9 +15,13 @@ namespace App.Controllers
     public class InventoryController : Controller
     {
         private readonly FlowersServices _flowersServices;
-        public InventoryController(FlowersServices flowersServices)
+        private readonly CategoriesServices _categoriesServices;
+        private readonly IMapper _mapper;
+        public InventoryController(FlowersServices flowersServices, CategoriesServices categoriesServices, IMapper mapper)
         {
             _flowersServices = flowersServices;
+            _categoriesServices = categoriesServices;
+            _mapper = mapper;
         }
         public IActionResult Details()
         {
