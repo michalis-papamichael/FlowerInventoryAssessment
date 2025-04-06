@@ -4,6 +4,11 @@ namespace App.Helpers
 {
     public static class Scripts
     {
+        /// <summary>
+        /// Configures environment variables (connection strings) by running the powershell script in the Scripts directory
+        /// </summary>
+        /// <param name="isTesting"></param>
+        /// <exception cref="FileNotFoundException"></exception>
         public static void ConfigureEnvViaPowershell(bool isTesting)
         {
             string? mainDbConnection = Environment.GetEnvironmentVariable("FlowerInventoryAssessment:connection", EnvironmentVariableTarget.Machine);
